@@ -3,12 +3,9 @@
 print_usage() {
     cat <<EOF
 This script installs and configures the CrowdStrike Falcon Sensor for Linux.
-
 CrowdStrike API credentials are needed to download Falcon sensor. The script recognizes the following environmental variables:
-
     - FALCON_CLIENT_ID
     - FALCON_CLIENT_SECRET
-
 Optional:
     - FALCON_CID                        (default: auto)
     - FALCON_CLOUD                      (default: auto)
@@ -312,13 +309,11 @@ aws_ssm_parameter() {
         cat <<EOF | head -c -1 | openssl dgst -sha256 | awk -F' ' '{print $2}'
 POST
 /
-
 content-type:application/x-amz-json-1.1
 host:ssm.$aws_my_region.amazonaws.com
 x-amz-date:$datetime
 x-amz-security-token:$security_token
 x-amz-target:$api_endpoint
-
 content-type;host;x-amz-date;x-amz-security-token;x-amz-target
 $request_data_dgst
 EOF
@@ -361,7 +356,6 @@ cs_falcon_gpg_import() {
     tempfile=$(mktemp)
     cat > "$tempfile" <<EOF
 -----BEGIN PGP PUBLIC KEY BLOCK-----
-
 mQINBGDaIBgBEADXSeElUO9NmPLhkSzeN7fGW1MRbNwxgHdo+UYt9R98snUEjXqV
 benyCOlLGjxUiVv3S+k6LQ3RyFubDINWyUI2kQhHFIPkniR1wmeMMIqncPVBdpEG
 Mi9F6aLg2Xkhz1tEWPkXWqXVo67jgCMFn3SAMYY1EO9HCXxj6OTa6IMbtqq1+3DR
@@ -457,7 +451,6 @@ os_name=$(
     if [ -z "$name" ]; then
         die "Cannot recognise operating system"
     fi
-
     echo "$name"
 )
 
@@ -493,6 +486,8 @@ cs_os_name=$(
         SLES)
             echo "SLES";;
         Ubuntu)
+            echo "Ubuntu";;
+        Pop!_OS)
             echo "Ubuntu";;
         *)
             die "Unrecognized OS: ${os_name}";;
@@ -604,7 +599,6 @@ cs_falcon_oauth_token=$(
     if ! command -v curl > /dev/null 2>&1; then
         die "The 'curl' command is missing. Please install it before continuing. Aborting..."
     fi
-
     token_result=$(echo "client_id=$cs_falcon_client_id&client_secret=$cs_falcon_client_secret" | \
                    curl -X POST -s -L "https://$(cs_cloud)/oauth2/token" \
                        -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
