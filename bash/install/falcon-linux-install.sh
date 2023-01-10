@@ -280,6 +280,8 @@ os_install_package() {
         Ubuntu)
             DEBIAN_FRONTEND=noninteractive apt-get -qq install -y "$pkg" > /dev/null
             ;;
+        Pop!_OS)
+            DEBIAN_FRONTEND=noninteractive apt-get -qq install -y "$pkg" > /dev/null
         *)
             die "Unrecognized OS: ${os_name}";;
     esac
@@ -488,7 +490,7 @@ cs_os_name=$(
         Ubuntu)
             echo "Ubuntu";;
         Pop!_OS)
-            echo "Ubuntu";;
+            echo "Pop!_OS";;
         *)
             die "Unrecognized OS: ${os_name}";;
     esac
