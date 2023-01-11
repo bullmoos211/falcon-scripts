@@ -490,8 +490,8 @@ cs_os_name=$(
             echo "SLES";;
         Ubuntu)
             echo "Ubuntu";;
-        Pop!_OS)
-            echo "Pop!_OS";;
+        #Pop!_OS)
+            #echo "Pop!_OS";;
         *)
             die "Unrecognized OS: ${os_name}";;
     esac
